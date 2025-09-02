@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دستورات ربات توکان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --neon-color-green: #39FF14;
+            --neon-color-blue: #00FFFF;
+            --main-bg-color: #050414;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            direction: rtl;
+            color: #fff;
+            background: var(--main-bg-color);
+            background-image: url('https://w.wallhaven.cc/full/z8/wallhaven-z8kdp6.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+            padding: 50px 20px;
+        }
+
+        h1 {
+            color: var(--neon-color-green);
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 5px var(--neon-color-green), 0 0 10px var(--neon-color-green), 0 0 20px var(--neon-color-green), 0 0 40px #0ff, 0 0 80px #0ff, 0 0 90px #0ff;
+            animation: neonPulse 2s infinite alternate;
+        }
+
+        @keyframes neonPulse {
+            from { text-shadow: 0 0 5px var(--neon-color-green), 0 0 10px var(--neon-color-green), 0 0 20px var(--neon-color-green), 0 0 40px #0ff, 0 0 80px #0ff, 0 0 90px #0ff; }
+            to { text-shadow: 0 0 2px var(--neon-color-green), 0 0 5px var(--neon-color-green), 0 0 10px var(--neon-color-green), 0 0 20px #0ff, 0 0 40px #0ff, 0 0 50px #0ff; }
+        }
+
+        .commands-buttons-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 80px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .commands-buttons-container button {
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border: 2px solid;
+            border-radius: 10px;
+            color: white;
+            background-color: transparent;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, text-shadow 0.3s;
+        }
+
+        .commands-buttons-container button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        #normalCommandsButton {
+            border-color: var(--neon-color-green);
+            color: var(--neon-color-green);
+            text-shadow: 0 0 8px var(--neon-color-green);
+            box-shadow: 0 0 15px var(--neon-color-green);
+        }
+
+        #normalCommandsButton:hover {
+            background-color: var(--neon-color-green);
+            color: var(--main-bg-color);
+        }
+
+        #plusCommandsButton {
+            border-color: var(--neon-color-blue);
+            color: var(--neon-color-blue);
+            text-shadow: 0 0 8px var(--neon-color-blue);
+            box-shadow: 0 0 15px var(--neon-color-blue);
+        }
+
+        #plusCommandsButton:hover {
+            background-color: var(--neon-color-blue);
+            color: var(--main-bg-color);
+        }
+
+        .commands-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+            padding: 0 20px;
+            justify-content: center;
+        }
+
+        .command-card {
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px var(--neon-color-green);
+            border-left: 5px solid var(--neon-color-green);
+            animation: fadeIn 0.8s ease-in-out forwards;
+            color: #f0f0f0;
+            text-align: right;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .command-card.plus {
+            border-left-color: var(--neon-color-blue);
+            box-shadow: 0 0 10px var(--neon-color-blue);
+        }
+
+        .command-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px var(--neon-color-green);
+        }
+
+        .command-card.plus:hover {
+            box-shadow: 0 0 20px var(--neon-color-blue);
+        }
+
+        .command-card h3 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: var(--neon-color-green);
+            text-shadow: 0 0 5px var(--neon-color-green);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .command-card.plus h3 {
+            color: var(--neon-color-blue);
+            text-shadow: 0 0 5px var(--neon-color-blue);
+        }
+
+        .command-card p {
+            margin: 10px 0 0;
+            font-size: 1em;
+            color: #ccc;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bottom-buttons {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .bottom-buttons button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: transparent;
+            border: 2px solid;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            color: var(--neon-color-green);
+            border-color: var(--neon-color-green);
+            text-shadow: 0 0 8px var(--neon-color-green);
+            box-shadow: 0 0 15px var(--neon-color-green);
+        }
+
+        .bottom-buttons button:hover {
+            transform: scale(1.05);
+            background-color: var(--neon-color-green);
+            color: var(--main-bg-color);
+        }
+
+        .bottom-buttons button:nth-child(2) {
+            color: var(--neon-color-blue);
+            border-color: var(--neon-color-blue);
+            text-shadow: 0 0 8px var(--neon-color-blue);
+            box-shadow: 0 0 15px var(--neon-color-blue);
+        }
+        .bottom-buttons button:nth-child(2):hover {
+            background-color: var(--neon-color-blue);
+            color: var(--main-bg-color);
+        }
+
+        .bottom-buttons button.support-button {
+            color: #FFD700;
+            border-color: #FFD700;
+            text-shadow: 0 0 8px #FFD700;
+            box-shadow: 0 0 15px #FFD700;
+        }
+
+        .bottom-buttons button.support-button:hover {
+            background-color: #FFD700;
+            color: var(--main-bg-color);
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 1em;
+            color: #aaa;
+            text-shadow: 0 0 5px #aaa;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                margin-top: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>دستورات ربات توکان</h1>
+
+    <div class="commands-buttons-container">
+        <button id="normalCommandsButton">دستورات نسخه معمولی</button>
+        <button id="plusCommandsButton">دستورات نسخه پلاس</button>
+    </div>
+
+    <div class="commands-grid-container" id="textContainer">
+    </div>
+
+    <div class="bottom-buttons">
+        <a href="https://rubika.ir/R_obokan" target="_blank">
+            <button>کانال ما</button>
+        </a>
+        <a href="https://aqa-mohammad.ir/" target="_blank">
+            <button>دانلود برنامه توکان</button>
+        </a>
+        <a href="https://rubika.ir/maty9001" target="_blank">
+            <button class="support-button">پشتیبانی</button>
+        </a>
+    </div>
+
+    <div class="footer">
+        طراحی شده توسط (@mle9393) 🌹❤️
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const normalCommandsButton = document.getElementById('normalCommandsButton');
+            const plusCommandsButton = document.getElementById('plusCommandsButton');
+            const textContainer = document.getElementById('textContainer');
+
+            const normalTexts = [
+                { title: 'ادمین کردن افراد', description: 'دستور: ریپ بزنید و بگید ارتقا' },
+                { title: 'ریم کردن افراد', description: 'دستور: ریپ بزنید و بگید بن' },
+                { title: 'افزودن افراد با آیدی', description: 'دستور: افزودن @آیدی' },
+                { title: 'حذف یک پیام', description: 'دستور: ریپ بزنید و بگید حذف' },
+                { title: 'دادن اخطار', description: 'دستور: ریپ بزنید و بگید اخطار' },
+                { title: 'محدود کردن کاربر', description: 'دستور: ریپ بزنید و بگید حالت سکوت (برای خارج کردن → ریپ بزنید و بگید حالت صدا)' },
+                { title: 'تایمر گروه', description: 'دستور: پاسخدهی 3 (عدد دلخواه)' },
+                { title: 'ماشین حساب', description: 'دستور: 2+2= (آخر معادله حتما مساوی بذارید)' },
+                { title: 'محاسبه ارز', description: 'دستور: 2 دلار' },
+                { title: 'جوک', description: 'دستور: جوک' },
+                { title: 'دانستنی', description: 'دستور: دانستنی' },
+                { title: 'فونت', description: 'دستور: فونت mmd' },
+                { title: 'یادگیری هوش مصنوعی', description: 'ربات از شما یاد می‌گیرد.' },
+                { title: 'پیام ناشناس', description: 'دستور: پیام @آیدی بگو سلام' },
+                { title: 'ریم کردن با آیدی', description: 'دستور: بن @آیدی' },
+                { title: 'شروع/پایان ویسکال', description: 'دستور: شروع ویسکال، پایان ویسکال' },
+                { title: 'سنجاق پیام', description: 'دستور: ریپ بزنید و بگید پین' },
+                { title: 'تغییر نام گروه', description: 'دستور: گروه تست (تست = اسم مورد نظر)' },
+                { title: 'حذف دست جمعی پیام‌ها', description: 'دستور: حذف همه' },
+                { title: 'تاریخ و ساعت', description: 'دستور: تاریخ یا ساعت' },
+                { title: 'گفتگو با کاربران', description: 'ربات با کاربران گفتگو می‌کند.' },
+                { title: 'آمار پیام دهندگان', description: 'دستور: آمار پیام' },
+                { title: 'آمار دستورات', description: 'دستور: آمار دستورات' },
+                { title: 'ارسال ویس', description: 'دستور: speak mohammad (mohammad = متن دلخواه)' },
+                { title: 'تغییر نام ربات', description: 'دستور: نام توکان (توکان = اسم دلخواه)' },
+                { title: 'تغییر بیوگرافی ربات', description: 'دستور: بیوگرافی ربات توکان (توکان = بیوگرافی دلخواه)' },
+                { title: 'وضعیت گروه', description: 'دستور: وضعیت گروه' },
+                { title: 'اطلاعات ایموجی', description: 'دستور: ایموجی 🌚 (🌚 = ایموجی دلخواه)' },
+                { title: 'پاکسازی پیام‌های یک نفر', description: 'ریپ بزنید روی کاربر و بگید پاکسازی' },
+                { title: 'پاکسازی تمام پیام‌ها', description: 'دستور: پاکسازی پیام ها' },
+                { title: 'تبدیل اعداد به حروف', description: 'ریپ بزنید روی عدد و بگید تبدیل' },
+                { title: 'تنظیم لقب', description: 'ریپ بزنید روی کاربر و بگید تنظیم لقب ... (برای حذف لقب → ریپ بزنید و بگید حذف لقب)' },
+                { title: 'ثبت اصل کاربران', description: 'ریپ بزنید روی پیام کاربر و بگید ثبت اصل (با #اصل هم می‌توانید استفاده کنید)' },
+                { title: 'پاکسازی لیست سیاه', description: 'دستور: پاکسازی لیست سیاه' },
+                { title: 'حذف چندتایی پیام‌ها', description: 'دستور: حذف 10 (۱۰ = تعداد پیام دلخواه)' },
+                { title: 'سکوت/صدا با آیدی', description: 'دستور: سکوت @آیدی، صدا @آیدی' },
+                { title: 'لیست سکوت', description: 'دستور: لیست سکوت' },
+                { title: 'محاسبه درصد', description: 'دستور: 20 درصد 70 (اعداد دلخواه)' },
+                { title: 'جستجو در ویکی‌پدیا', description: 'دستور: جستجو ... (متن مورد نظر)' },
+                { title: 'فعال/غیرفعال کردن واکنش‌ها', description: 'دستور: واکنش روشن، واکنش خاموش' },
+                { title: 'باگ پروفایل', description: 'در پنل قابل استفاده است.' },
+                { title: 'اطلاعات اکانت', description: 'دستور: اطلاعات اکانت' },
+                { title: 'پاکسازی محتوا', description: 'دستور: پاکسازی عکس‌ها، فیلم‌ها، آهنگ‌ها، گیف‌ها و ویس‌ها' },
+                { title: 'مدیریت کاربران گروه', description: 'دستور: برسی گروه' },
+                { title: 'قرعه کشی روبینو', description: 'دستور: راهنمای روبینو' },
+                { title: 'اطلاعات تاریخ تولد', description: 'دستور: تولد 1385/4/17 (به همین شکل)' },
+                { title: 'اضافه کردن ادمینی ربات', description: 'ریپ بزنید روی کاربر و بگید ثبت ادمین' },
+                { title: 'محاسبه تعداد روزها', description: 'دستور: ... روز دیگه' },
+                { title: 'آمار فردی', description: 'دستور: آمار من' },
+                { title: 'آمار کاربران', description: 'دستور: آمار @آیدی' },
+                { title: 'تغییر اسم ربات', description: 'دستور: -اسم ...' },
+                { title: 'تغییر بیوگرافی ربات', description: 'دستور: -بیوگرافی ...' },
+                { title: 'لیست گزینه‌ها', description: 'دستور: گزینه‌ها' },
+                { title: 'پاکسازی هوش مصنوعی', description: 'ریپ بزنید روی پیام ربات و بگید ربات زشته یا ربات نگو' },
+                { title: 'فعال/غیرفعال کردن پیام اخطار', description: 'دستور: پیام اخطار فعال یا پیام اخطار غیرفعال' }
+            ];
+
+            const plusTexts = [
+                { title: 'ارسال عکس', description: 'دستور: عکس طبیعت' },
+                { title: 'هواشناسی شهرها', description: 'دستور: هواشناسی مشهد' },
+                { title: 'ارسال آهنگ', description: 'دستور: آهنگ بی‌قرار از محسن یگانه' },
+                { title: 'ارسال پروفایل', description: 'دستور: پروفایل پرسپولیس' },
+                { title: 'دانستنی با تصویر', description: 'دستور: دانستنی تصویر' },
+                { title: 'فونت آفلاین', description: 'دستور: فونت سلام' },
+                { title: 'بازی جدید (دو‌نفره)', description: 'دستور: ایجاد بازی (ریپلای)' },
+                { title: 'بازی چی کم شده / پیدا کن', description: 'دستور: بازی چی کم شده یا بازی پیدا کن' },
+                { title: 'بازی مافیا', description: 'در پنل قابل استفاده است.' },
+                { title: 'بازی اسم و فامیل', description: 'در پنل قابل استفاده است.' },
+                { title: 'بازی جرعت و حقیقت', description: 'دستور: جرعت و حقیقت یا ج ح' },
+                { title: 'بازی منچ', description: 'در پنل قابل استفاده است.' },
+                { title: 'بازی کلمات / حروف', description: 'دستور: بازی کلمات' },
+                { title: 'هوش مصنوعی پاسخ به ویس', description: 'در تنظیمات قابل فعال‌سازی است.' },
+                { title: 'یافتن آهنگ از ویس', description: 'دستور: دریافت آهنگ (ریپلای روی ویس)' },
+                { title: 'تبدیل کلمه انگلیسی به ایموجی', description: 'دستور: love ^^ 💖 یا love emoji 💖' },
+                { title: 'فال حافظ آفلاین', description: 'دستور: فال حافظ' },
+                { title: 'پردازش صدا', description: 'دستور: پردازش صدا یا لیست پردازش صدا' },
+                { title: 'پاسخ به سوالات با هوش مصنوعی', description: 'دستور: ربات ... ؟' }
+            ];
+
+            function createCommandCards(textsArray, isPlus) {
+                textContainer.innerHTML = '';
+                textsArray.forEach((text, index) => {
+                    const card = document.createElement('div');
+                    card.classList.add('command-card');
+                    if (isPlus) {
+                        card.classList.add('plus');
+                    }
+                    card.style.animationDelay = `${index * 0.05}s`;
+                    
+                    card.innerHTML = `
+                        <h3><i class="fas fa-robot"></i> ${text.title}</h3>
+                        <p>${text.description}</p>
+                    `;
+                    textContainer.appendChild(card);
+                });
+            }
+
+            let currentView = 'normal';
+
+            normalCommandsButton.addEventListener('click', () => {
+                if (currentView === 'normal') {
+                    textContainer.innerHTML = '';
+                    currentView = null;
+                } else {
+                    createCommandCards(normalTexts, false);
+                    currentView = 'normal';
+                }
+            });
+
+            plusCommandsButton.addEventListener('click', () => {
+                if (currentView === 'plus') {
+                    textContainer.innerHTML = '';
+                    currentView = null;
+                } else {
+                    createCommandCards(plusTexts, true);
+                    currentView = 'plus';
+                }
+            });
+
+            // نمایش پیش‌فرض دستورات معمولی
+            createCommandCards(normalTexts, false);
+        });
+    </script>
+</body>
+</html>
